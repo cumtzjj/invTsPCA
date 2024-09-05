@@ -1,9 +1,5 @@
 import numpy as np
-#from sko.PSO import PSO
-#from sko.tools import set_run_mode
-#import respknt
-#from scipy import signal
-
+from utils import modeling_acs
 
 def obj_func(x):
     '''
