@@ -108,7 +108,7 @@ if __name__ == '__main__':
     print('upper_boundary=',ub)
     
  
-   bounds=[(i,j) for i,j in zip(lb,ub)]
+    bounds=[(i,j) for i,j in zip(lb,ub)]
     print(bounds)
     
  
