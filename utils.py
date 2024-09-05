@@ -1,5 +1,5 @@
 import numpy as np
-import respknt
+#import respknt
 from scipy import signal
 
 
@@ -111,3 +111,52 @@ def modeling_ac(model,nl,slow,time_len,time_samp,freq_band,model_smooth=1):
         ac_out[:,j]=-ac[lent-1:2*lent-1]/ac.max()
 
     return ac_out
+
+from telewavesim import utils
+def modeling_acs(x,nl,slow,time_len,time_samp,freq_band,model_smooth=1):
+    
+    vp_in                   = x[:nl]  
+    if len(x) >= 2*nl:
+        k_in                    = x[2*nl-1:3*nl-1] 
+    else:
+        k_in = 1.73
+       
+#    print(k_in)
+    vs_in = vp_in/k_in
+
+    if len(x) >= 3*nl:
+        rho_in = x[-nl:]
+    else:
+        rho_in=1.6612*vp_in-0.4721*vp_in**2+0.0671*vp_in**3-0.0043*vp_in**4+0.000106*vp_in**5
+        
+    rho_in *= 1000
+    thick_in = np.zeros_like(vp_in)
+    thick_in[:nl-1]                = x[nl:2*nl-1] 
+
+    if model_smooth:
+        thick_in[thick_in<model_smooth]=0
+        
+    model = utils.Model(thick_in,rho_in,vp_in,vs_in)
+    dt = time_samp
+    npts = int(time_len/time_samp) + 1 
+    
+    nyq_bd = freq_band*dt*2 
+    b, a = signal.butter(2, nyq_bd, 'bandpass')
+    
+    ac_out = np.zeros((npts,slow.size))
+    
+    for j in range(slow.size):
+        if slow.size == 1:
+            slowness = slow
+        else:
+            slowness                 = slow[j]
+        st = utils.run_plane(model, slowness, npts, dt)
+
+        bp=signal.filtfilt(b, a, st[0].data)
+        ac=signal.correlate(bp,bp,mode='full')
+        #print(ac.shape)
+        ac_out[:,j]=-ac[npts-1:2*npts-1]/ac.max()
+
+    return ac_out
+    
+
