@@ -1,5 +1,7 @@
 import numpy as np
+#import respknt
 from utils import modeling_acs
+
 
 def obj_func(x):
     '''
@@ -10,10 +12,10 @@ def obj_func(x):
     
 #    proc_paras(proc_file)
 #    read_zac(zacfile,raypfile,stdfile)
-    ac_out=modeling_ac(x,nl,slow,time_len,time_samp,freq_band,model_smooth=0.1)
-
+    ac_out=modeling_acs(x,nl,slow,time_len,time_samp,freq_band,model_smooth=0.1)
+    maxl = int(zac_lent/time_samp)
     if mse_flag == 'mse':
-        maxl = int(zac_lent/time_samp)
+    #    maxl = int(zac_lent/time_samp)
         bias = int(bias_lent/time_samp)
 #    print('maxl=',maxl)
         tmp = zacs[:maxl,select_slow] - ac_out[:maxl,select_slow]
@@ -27,7 +29,7 @@ def obj_func(x):
     tmp2 = 0
     if mse_flag == 'corr':
         for i in select_slow:
-            tmp = np.corrcoef(zacs[:400,i],ac_out[:400,i])
+            tmp = np.corrcoef(zacs[:maxl,i],ac_out[:maxl,i])
             tmp2 = tmp2 + tmp[0,1]
         tmp3 = tmp2 / len(select_slow)
 
@@ -35,6 +37,7 @@ def obj_func(x):
 
 
     return mse
+
 
 from pso_gpt import pso
 
@@ -94,8 +97,8 @@ if __name__ == '__main__':
     k_lb=x[:,2]*0.95 #np.full(nl,1.5) #[1.6,1.6,1.6,1.6,1.6]
     k_ub=x[:,2]*1.05 #np.full(nl,3.0) #[1.9,1.9,1.9,1.9,1.9]
 
-    rho_lb=x[:,3]*0.95 #np.full(nl,0.8)
-    rho_ub=x[:,3]*1.05 #np.full(nl,3.0)
+    rho_lb=x[:,3]*0.95*1000 #np.full(nl,0.8)
+    rho_ub=x[:,3]*1.05*1000 #np.full(nl,3.0)
 
     lb = np.concatenate((vp_lb,h_lb,k_lb,rho_lb))
     ub = np.concatenate((vp_ub,h_ub,k_ub,rho_ub))
@@ -103,7 +106,6 @@ if __name__ == '__main__':
     print('low_boundary=',lb)
     print('upper_boundary=',ub)
     
- 
     bounds=[(i,j) for i,j in zip(lb,ub)]
     print(bounds)
     
@@ -112,13 +114,12 @@ if __name__ == '__main__':
    # set_run_mode(obj_func, mode)
 
     nloop=1
-   
     num_particles = 10*len(lb)
     max_iter = 1000
 
     for iloop in range(nloop):
         best_position, best_value_history = pso(obj_func, bounds, num_particles, max_iter, min_best_increase=0.0001)
-        #print('best_x is ', pso.gbest_x, 'best_y is', pso.gbest_y)
+        print('best_position is ', best_position)
         fname='out/qspa_corr'+'_best_x'+str(iloop)+'.csv'
         np.savetxt(fname,best_position,delimiter=',')
         fname='out/qspa_corr'+'_gbest_y'+str(iloop)+'.csv'
