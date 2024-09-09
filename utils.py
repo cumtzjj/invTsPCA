@@ -127,14 +127,16 @@ def modeling_acs(x,nl,slow,time_len,time_samp,freq_band,model_smooth=1):
     if len(x) >= 3*nl:
         rho_in = x[-nl:]
     else:
-        rho_in=1.6612*vp_in-0.4721*vp_in**2+0.0671*vp_in**3-0.0043*vp_in**4+0.000106*vp_in**5
+        rho_in = (1.6612*vp_in-0.4721*vp_in**2+0.0671*vp_in**3-0.0043*vp_in**4+0.000106*vp_in**5) * 1000
         
-    rho_in *= 1000
+    #rho_in *= 1000
     thick_in = np.zeros_like(vp_in)
     thick_in[:nl-1]                = x[nl:2*nl-1] 
 
     if model_smooth:
         thick_in[thick_in<model_smooth]=0
+        
+ #   print(thick_in,rho_in,vp_in,vs_in)
         
     model = utils.Model(thick_in,rho_in,vp_in,vs_in)
     dt = time_samp
