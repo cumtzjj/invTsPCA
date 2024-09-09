@@ -776,7 +776,7 @@ def get_uncertainty(fileref,zacfile,raypfile,stdfile,proc_file,model):
 from scipy import io
 if __name__ == '__main__':
 #    fileref='out/bosa_bias_pop_'
-    fileref='out/st01_gpt_'
+    fileref='out/qspa_corr_'
 #    fileref='out/model2_5_'
 #    fileref='out/BOSA_corr_'
     #model='model'
@@ -799,11 +799,11 @@ if __name__ == '__main__':
     w = 1
     ylim=(5,0)
 #    title=r'$M_3$'
-    title='ST01'
+    title='QSPA'
     bias=0
     
 
-    proc_file = 'process_file_ST01.txt'
+    proc_file = 'process_file_QSPA.txt'
 #    zacfile = 'model2zac_bins_noise.npy'
 #    raypfile = 'model2rayp_bins_noise.npy'
 #    stdfile = 'model2zac_std_noise.npy'
@@ -813,13 +813,13 @@ if __name__ == '__main__':
 #    stdfile = 'model0zac_all_std_noise.npy'
 
 
-    zacfile = 'zac_bins_ST01_newF.npy' 
+    zacfile = 'zac_bins_QSPA.npy' 
 #    zacfile = 'bosa_zac_bins.npy'
 #    raypfile = 'bosa_rayp_bins.npy'
-    raypfile = 'rayp_bins_ST01_newF.npy'    
+    raypfile = 'rayp_bins_QSPA.npy'    
 #    raypfile = 'model0_stack_rayp.npy'
 #    stdfile = 'bosa_std_bins.npy'
-    stdfile = 'zac_std_ST01_newF.npy'
+    stdfile = 'zac_std_QSPA.npy'
 #    stdfile = 'model0zac_all_std_noise.npy'
 #    proc_file = 'process_file_model0.txt'
 #    evsfile = 'events_num_BOSA.npy'
@@ -848,9 +848,9 @@ if __name__ == '__main__':
 #    plot_model(fileref,model='density',nl=nl,model_ref=model_ref,nloop=nloop,ylim=(5,0))
     #plot_evs_wforms(fileref,zacfile,evsfile,raypfile,scale,xlim,figsize)
     get_uncertainty(fileref,zacfile,raypfile,stdfile,proc_file,model='h')
-#    plot_waveforms(zacfile,stdfile,raypfile,proc_file,fileref,figsize=figsize,nloop=nloop,xlim=xlim,scale=scale,select=select,model_smooth=model_smooth)
-#    plot_gbesty(fileref,nloop=nloop)
-#    uncertainty_analysis(zacfile,stdfile,raypfile,proc_file,fileref,title=title,model_ref=model_ref,nloop=nloop,ylim=ylim,xlim=(3,5),w=w,select=select,model_smooth=model_smooth,model='vp')
-#    uncertainty_analysis(zacfile,stdfile,raypfile,proc_file,fileref,title=title,model_ref=model_ref,nloop=nloop,ylim=ylim,xlim=(1,3.0),w=w,select=select,model_smooth=model_smooth,model='vpvs')
-#    uncertainty_analysis(zacfile,stdfile,raypfile,proc_file,fileref,title=title,model_ref=model_ref,nloop=nloop,ylim=ylim,xlim=(0.5,3.0),w=w,select=select,model_smooth=model_smooth,model='density')
+    plot_waveforms(zacfile,stdfile,raypfile,proc_file,fileref,figsize=figsize,nloop=nloop,xlim=xlim,scale=scale,select=select,model_smooth=model_smooth)
+    plot_gbesty(fileref,nloop=nloop)
+    uncertainty_analysis(zacfile,stdfile,raypfile,proc_file,fileref,title=title,model_ref=model_ref,nloop=nloop,ylim=ylim,xlim=(3,5),w=w,select=select,model_smooth=model_smooth,model='vp')
+    uncertainty_analysis(zacfile,stdfile,raypfile,proc_file,fileref,title=title,model_ref=model_ref,nloop=nloop,ylim=ylim,xlim=(1,3.0),w=w,select=select,model_smooth=model_smooth,model='vpvs')
+    uncertainty_analysis(zacfile,stdfile,raypfile,proc_file,fileref,title=title,model_ref=model_ref,nloop=nloop,ylim=ylim,xlim=(0.5,3.0),w=w,select=select,model_smooth=model_smooth,model='density')
 #    plot_misfit(zacfile,stdfile,raypfile,proc_file,fileref,figsize=figsize,nloop=nloop,xlim=(0,20),scale=5,select=select,model_smooth=model_smooth)
