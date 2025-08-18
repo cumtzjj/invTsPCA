@@ -1,5 +1,9 @@
 import numpy as np
+<<<<<<< HEAD
 #import respknt
+=======
+import respknt
+>>>>>>> master
 from scipy import signal
 
 
@@ -112,7 +116,11 @@ def modeling_ac(model,nl,slow,time_len,time_samp,freq_band,model_smooth=1):
 
     return ac_out
 
+<<<<<<< HEAD
 from telewavesim import utils
+=======
+#from telewavesim import utils
+>>>>>>> master
 def modeling_acs(x,nl,slow,time_len,time_samp,freq_band,model_smooth=1):
     
     vp_in                   = x[:nl]  

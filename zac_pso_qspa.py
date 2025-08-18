@@ -113,8 +113,13 @@ if __name__ == '__main__':
    # mode = 'multiprocessing'
    # set_run_mode(obj_func, mode)
 
+<<<<<<< HEAD
     nloop=1
     num_particles = 10*len(lb)
+=======
+    nloop=100
+    num_particles = 20*len(lb)
+>>>>>>> master
     max_iter = 1000
 
     for iloop in range(nloop):

@@ -592,7 +592,11 @@ def uncertainty_analysis(synfile,stdfile,raypfile,proc_file,fileref,model_ref,ti
     if len(title)>0:
         plt.title(title)
 
+<<<<<<< HEAD
     plt.colorbar()
+=======
+    plt.colorbar(label='Probability density')
+>>>>>>> master
     plt.tight_layout()
     plt.savefig(fileref+model+str(w*10)+'_uncertainty.pdf',bbox_inches='tight')
     plt.savefig(fileref+model+str(w*10)+'_uncertainty.png',dpi=600,bbox_inches='tight')
