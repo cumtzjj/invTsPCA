@@ -1,0 +1,4 @@
+time_length 70
+time_sampling 0.025
+low_pass 0.5
+high_pass 4
