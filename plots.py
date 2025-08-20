@@ -776,7 +776,7 @@ def get_uncertainty(fileref,zacfile,raypfile,stdfile,proc_file,model):
 from scipy import io
 if __name__ == '__main__':
 #    fileref='out/bosa_bias_pop_'
-    fileref='out/qspa_corr_'
+    fileref='out/qspa_mse_'
 #    fileref='out/model2_5_'
 #    fileref='out/BOSA_corr_'
     #model='model'
